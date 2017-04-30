@@ -84,6 +84,7 @@ points_morphed = weighted_points(points1,points2)
 triangles1 = find_triangles(face1.shape, points1)[4:]
 triangles2 = find_triangles(face2.shape, points2)[4:]
 triangles_morphed = find_triangles(face2.shape, points_morphed)[4:]
+alpha = 0.5
 
 # See: https://github.com/spmallick/learnopencv/blob/master/FaceMorph/faceMorph.py
 newimg = np.zeros(face2gray.shape, np.uint8)
@@ -110,13 +111,12 @@ for tri1, tri2, tri_morph in zip(triangles1, triangles2, triangles_morphed):
     #tri2_offset = np.array([(tri2[0][0]-bb2[0], tri2[0][1]-bb2[1]), (tri2[1][0]-bb2[0], tri2[1][1]-bb2[1]), (tri2[2][0]-bb2[0], tri2[2][1]-bb2[1])], np.float32)
 
     #our mask is size bb_morph(height) x bb_morph(width)
-    #thus our offsets must be taken with respect to that same bb_morph box
-    #so when we affine traingles with respect to the same point, we can map them to the same box/mask
+    #affine traingles with respect to the same point, we can map them to the same box/mask
     trans1 = cv2.getAffineTransform(tri1_offset, tri_morph_offset)
     trans2 = cv2.getAffineTransform(tri2_offset, tri_morph_offset)
 
     mask = np.zeros((bb_morph[3], bb_morph[2]), np.float32)
-    cv2.fillConvexPoly(mask, np.int32(tri_morph_offset), (1.0,1.0,1.0), 16,0)
+    cv2.fillConvexPoly(mask, np.int32(tri_morph_offset), 1.0, 16)
 
     #bb  = [topleftx, toplefty, width, height]
     subimg1 = face1gray[bb1[1]:bb1[1]+bb1[3], bb1[0]:bb1[0]+bb1[2]]
@@ -131,8 +131,15 @@ for tri1, tri2, tri_morph in zip(triangles1, triangles2, triangles_morphed):
     plt.imshow(warped2*mask, cmap='gray')
     plt.show()
 
-    newimg_sq = newimg[bb_morph[1]:bb_morph[1]+bb_morph[3], bb_morph[0]:bb_morph[0]+bb_morph[2]]
-    newimg[bb_morph[1]:bb_morph[1]+bb_morph[3], bb_morph[0]:bb_morph[0]+bb_morph[2]] = newimg_sq + ((warped1*.5+warped2*.5)*mask)[:newimg_sq.shape[0], :newimg_sq.shape[1]]
+    wow = newimg[bb_morph[1]:bb_morph[1]+bb_morph[3], bb_morph[0]:bb_morph[0]+bb_morph[2]]
+    print(bb_morph)
+    #bb_morph might be larger than the img
+    out_warp = (1 - alpha)*warped1 + alpha*warped2 #look into find_triangles and weighted_points
+    #newimg_sq = newimg[bb_morph[1]:bb_morph[1]+bb_morph[3], bb_morph[0]:bb_morph[0]+bb_morph[2]]
+    #might need to change "bb2" back to bb_morph
+    newimg[bb2[1]:bb2[1]+bb2[3], bb2[0]:bb2[0]+bb2[2]] = out_warp*mask
+    #newimg_sq + ((warped1*.5+warped2*.5)*mask)[:newimg_sq.shape[0], :newimg_sq.shape[1]]
+    #figure right size for warp
 
 plt.figure()
 plt.imshow(newimg, cmap='gray')
