@@ -51,75 +51,9 @@
 % The testflow support page is at:
 % http://www.michaelshell.org/tex/testflow/
 
-
-
-% Note that the a4paper option is mainly intended so that authors in
-% countries using A4 can easily print to A4 and see how their papers will
-% look in print - the typesetting of the document will not typically be
-% affected with changes in paper size (but the bottom and side margins will).
-% Use the testflow package mentioned above to verify correct handling of
-% both paper sizes by the user's LaTeX system.
-%
-% Also note that the "draftcls" or "draftclsnofoot", not "draft", option
-% should be used if it is desired that the figures are to be displayed in
-% draft mode.
 %
 \documentclass[journal]{IEEEtran}
-% Add the compsoc option for Computer Society conferences.
-%
-% If IEEEtran.cls has not been installed into the LaTeX system files,
-% manually specify the path to it like:
-% \documentclass[conference]{../sty/IEEEtran}
 
-
-
-
-
-% Some very useful LaTeX packages include:
-% (uncomment the ones you want to load)
-
-
-% *** MISC UTILITY PACKAGES ***
-%
-%\usepackage{ifpdf}
-% Heiko Oberdiek's ifpdf.sty is very useful if you need conditional
-% compilation based on whether the output is pdf or dvi.
-% usage:
-% \ifpdf
-%   % pdf code
-% \else
-%   % dvi code
-% \fi
-% The latest version of ifpdf.sty can be obtained from:
-% http://www.ctan.org/tex-archive/macros/latex/contrib/oberdiek/
-% Also, note that IEEEtran.cls V1.7 and later provides a builtin
-% \ifCLASSINFOpdf conditional that works the same way.
-% When switching from latex to pdflatex and vice-versa, the compiler may
-% have to be run twice to clear warning/error messages.
-
-
-
-
-
-
-% *** CITATION PACKAGES ***
-%
-%\usepackage{cite}
-% cite.sty was written by Donald Arseneau
-% V1.6 and later of IEEEtran pre-defines the format of the cite.sty package
-% \cite{} output to follow that of IEEE. Loading the cite package will
-% result in citation numbers being automatically sorted and properly
-% "compressed/ranged". e.g., [1], [9], [2], [7], [5], [6] without using
-% cite.sty will become [1], [2], [5]--[7], [9] using cite.sty. cite.sty's
-% \cite will automatically add leading space, if needed. Use cite.sty's
-% noadjust option (cite.sty V3.8 and later) if you want to turn this off
-% such as if a citation ever needs to be enclosed in parenthesis.
-% cite.sty is already installed on most LaTeX systems. Be sure and use
-% version 4.0 (2003-05-27) and later if using hyperref.sty. cite.sty does
-% not currently provide for hyperlinked citations.
-% The latest version can be obtained at:
-% http://www.ctan.org/tex-archive/macros/latex/contrib/cite/
-% The documentation is contained in the cite.sty file itself.
 
 \usepackage{hyperref}
 
@@ -173,130 +107,6 @@
 % *** MATH PACKAGES ***
 %
 \usepackage[cmex10]{amsmath}
-% A popular package from the American Mathematical Society that provides
-% many useful and powerful commands for dealing with mathematics. If using
-% it, be sure to load this package with the cmex10 option to ensure that
-% only type 1 fonts will utilized at all point sizes. Without this option,
-% it is possible that some math symbols, particularly those within
-% footnotes, will be rendered in bitmap form which will result in a
-% document that can not be IEEE Xplore compliant!
-%
-% Also, note that the amsmath package sets \interdisplaylinepenalty to 10000
-% thus preventing page breaks from occurring within multiline equations. Use:
-%\interdisplaylinepenalty=2500
-% after loading amsmath to restore such page breaks as IEEEtran.cls normally
-% does. amsmath.sty is already installed on most LaTeX systems. The latest
-% version and documentation can be obtained at:
-% http://www.ctan.org/tex-archive/macros/latex/required/amslatex/math/
-
-
-
-
-
-% *** SPECIALIZED LIST PACKAGES ***
-%
-%\usepackage{algorithmic}
-% algorithmic.sty was written by Peter Williams and Rogerio Brito.
-% This package provides an algorithmic environment fo describing algorithms.
-% You can use the algorithmic environment in-text or within a figure
-% environment to provide for a floating algorithm. Do NOT use the algorithm
-% floating environment provided by algorithm.sty (by the same authors) or
-% algorithm2e.sty (by Christophe Fiorio) as IEEE does not use dedicated
-% algorithm float types and packages that provide these will not provide
-% correct IEEE style captions. The latest version and documentation of
-% algorithmic.sty can be obtained at:
-% http://www.ctan.org/tex-archive/macros/latex/contrib/algorithms/
-% There is also a support site at:
-% http://algorithms.berlios.de/index.html
-% Also of interest may be the (relatively newer and more customizable)
-% algorithmicx.sty package by Szasz Janos:
-% http://www.ctan.org/tex-archive/macros/latex/contrib/algorithmicx/
-
-
-
-
-% *** ALIGNMENT PACKAGES ***
-%
-%\usepackage{array}
-% Frank Mittelbach's and David Carlisle's array.sty patches and improves
-% the standard LaTeX2e array and tabular environments to provide better
-% appearance and additional user controls. As the default LaTeX2e table
-% generation code is lacking to the point of almost being broken with
-% respect to the quality of the end results, all users are strongly
-% advised to use an enhanced (at the very least that provided by array.sty)
-% set of table tools. array.sty is already installed on most systems. The
-% latest version and documentation can be obtained at:
-% http://www.ctan.org/tex-archive/macros/latex/required/tools/
-
-
-% IEEEtran contains the IEEEeqnarray family of commands that can be used to
-% generate multiline equations as well as matrices, tables, etc., of high
-% quality.
-
-
-
-
-% *** SUBFIGURE PACKAGES ***
-%\ifCLASSOPTIONcompsoc
-%  \usepackage[caption=false,font=normalsize,labelfont=sf,textfont=sf]{subfig}
-%\else
-%  \usepackage[caption=false,font=footnotesize]{subfig}
-%\fi
-% subfig.sty, written by Steven Douglas Cochran, is the modern replacement
-% for subfigure.sty, the latter of which is no longer maintained and is
-% incompatible with some LaTeX packages including fixltx2e. However,
-% subfig.sty requires and automatically loads Axel Sommerfeldt's caption.sty
-% which will override IEEEtran.cls' handling of captions and this will result
-% in non-IEEE style figure/table captions. To prevent this problem, be sure
-% and invoke subfig.sty's "caption=false" package option (available since
-% subfig.sty version 1.3, 2005/06/28) as this is will preserve IEEEtran.cls
-% handling of captions.
-% Note that the Computer Society format requires a larger sans serif font
-% than the serif footnote size font used in traditional IEEE formatting
-% and thus the need to invoke different subfig.sty package options depending
-% on whether compsoc mode has been enabled.
-%
-% The latest version and documentation of subfig.sty can be obtained at:
-% http://www.ctan.org/tex-archive/macros/latex/contrib/subfig/
-
-
-
-
-% *** FLOAT PACKAGES ***
-%
-%\usepackage{fixltx2e}
-% fixltx2e, the successor to the earlier fix2col.sty, was written by
-% Frank Mittelbach and David Carlisle. This package corrects a few problems
-% in the LaTeX2e kernel, the most notable of which is that in current
-% LaTeX2e releases, the ordering of single and double column floats is not
-% guaranteed to be preserved. Thus, an unpatched LaTeX2e can allow a
-% single column figure to be placed prior to an earlier double column
-% figure. The latest version and documentation can be found at:
-% http://www.ctan.org/tex-archive/macros/latex/base/
-
-
-%\usepackage{stfloats}
-% stfloats.sty was written by Sigitas Tolusis. This package gives LaTeX2e
-% the ability to do double column floats at the bottom of the page as well
-% as the top. (e.g., "\begin{figure*}[!b]" is not normally possible in
-% LaTeX2e). It also provides a command:
-%\fnbelowfloat
-% to enable the placement of footnotes below bottom floats (the standard
-% LaTeX2e kernel puts them above bottom floats). This is an invasive package
-% which rewrites many portions of the LaTeX2e float routines. It may not work
-% with other packages that modify the LaTeX2e float routines. The latest
-% version and documentation can be obtained at:
-% http://www.ctan.org/tex-archive/macros/latex/contrib/sttools/
-% Do not use the stfloats baselinefloat ability as IEEE does not allow
-% \baselineskip to stretch. Authors submitting work to the IEEE should note
-% that IEEE rarely uses double column equations and that authors should try
-% to avoid such use. Do not be tempted to use the cuted.sty or midfloat.sty
-% packages (also by Sigitas Tolusis) as IEEE does not format its papers in
-% such ways.
-% Do not attempt to use stfloats with fixltx2e as they are incompatible.
-% Instead, use Morten Hogholm'a dblfloatfix which combines the features
-% of both fixltx2e and stfloats:
-%
 
 \usepackage{float}
 %\usepackage{dblfloatfix}
@@ -307,22 +117,7 @@
 \usepackage{enumitem}
 
 
-% *** PDF, URL AND HYPERLINK PACKAGES ***
-%
-%\usepackage{url}
-% url.sty was written by Donald Arseneau. It provides better support for
-% handling and breaking URLs. url.sty is already installed on most LaTeX
-% systems. The latest version and documentation can be obtained at:
-% http://www.ctan.org/tex-archive/macros/latex/contrib/url/
-% Basically, \url{my_url_here}.
-
-
-
-
-% *** Do not adjust lengths that control margins, column widths, etc. ***
-% *** Do not use packages that alter fonts (such as pslatex).         ***
-% There should be no need to do such things with IEEEtran.cls V1.6 and later.
-% (Unless specifically asked to do so by the journal or conference you plan
+% conference you plan
 % to submit to, of course. )
 
 
@@ -346,10 +141,6 @@
 		Southern Methodist University
         }
         
-
-
-
-
 
 % use for special paper notices
 %\IEEEspecialpapernotice{(Invited Paper)}
@@ -427,48 +218,7 @@ Y_M &= (1-\alpha)Y_I + \alpha*Y_J
 	\includegraphics[width = \linewidth]{triangles}
 	\caption{Masked Triangles}
 \end{figure}
-%\subsection{Find Corresponding Points}
-%\begin{enumerate}[label=\alph*)]
-%\item Dlib
-%\begin{enumerate}[label=\roman*)]
-%	\item dlib.get$\_$frontal$\_$face$\_$detector() to find a bounding box over a face
-%	\begin{enumerate}[label=\arabic*)]
-%		\item Uses sliding window classifier over a histogram of gradients pyramid
-%	\end{enumerate}
-%	\item dlib.shape$\_$predictor() to find “key-points” within the bounding box
-%	\begin{enumerate}[label=\arabic*)]
-%		\item Model trained over the HELEN dataset for facial feature detection
-%	\end{enumerate}
-%\end{enumerate}
-%\end{enumerate}
 
-%\subsection{Delaunay Triangulation}
-%\begin{enumerate}[label=\alph*)]
-%\item Algorithm used to maximize the minimum necessary angle within triangles within points (no “slivers”)
-%\item Used cv2.Subdiv2D class and .getTriangleList()
-%\begin{enumerate}[label=\roman*)]
-%	\item This handled the triangulation algorithm for us
-%	\item Returns a list of sets of 3 points (x $\&$ y coordinates)
-%	\item We only had to clean up the results a little bit
-%	\begin{enumerate}[label=\arabic*)]
-%		\item Discard triangles that extended beyond the image
-%		\item Establish the one-to-one correspondence between each image's triangles
-%	\end{enumerate}
-%\end{enumerate}
-%\end{enumerate}
-%\subsection{Warping Images}
-%\begin{enumerate}[label=\alph*)]
-%\item Iterate through all available triangles
-%\item Calculate the affine transformations from I$\rightarrow$M and J$\rightarrow$M
-%\item
-
-%\item Use warpAffine to apply the affine transform
-%\item Apply triangle mask to only retrieve morphed triangle
-%\begin{figure}[H]
-%	\includegraphics[width = \linewidth]{triangles}
-%	\caption{Masked Triangles}
-%\end{figure}
-%\end{enumerate}
 
 \subsection{GIF Creation}
 A GIF, at its most basic, is a series of static images joined and played in series. By pushing each still into a NumPy array, the GIF generated from the array appears to be a seamless morph. The reverse playback can be created by appending the reverse of the image array to itself. Because each frame in a GIF can have an independent duration, a longer pause at the start and end frames should be created to emphasize each original image. Similar to video, creation of a GIF has an inherent tradeoff of filesize and fluidity/frame rate. For our design, we opted for fewer frames (8 frames) because we wanted to service as many server requests as possible. Using Python's imageio, we further quantized the color spectrum to only 32 shades of grey for each frame and create a compressed GIF from that array of frames.
@@ -495,34 +245,6 @@ See \url{https://github.com/conradhappeliv/imagemorpher} for the full code-base 
 % use section* for acknowledgement
 %\section*{Acknowledgment}
 
-
-
-
-
-
-%\begin{thebibliography}{1}
-
-%\bibitem{}
-%http://docs.opencv.org/2.4/modules/imgproc/doc/geometric$\_$transformations.html
-%?highlight=getaffinetransform$\#$warpaffine
-
-%\bibitem{}
-%http://docs.opencv.org/2.4/modules/imgproc/doc/geometric$\_$transformations.html
-%$\#$getaffinetransform
-
-%\bibitem{}
-%http://dlib.net/imaging.html$\#$get$\_$frontal$\_$face$\_$detector
-
-%\bibitem{}
-%http://dlib.net/imaging.html$\#$shape$\_$predictor
-
-%\bibitem{}
-%http://imageio.readthedocs.io/en/latest/userapi.html$\#$imageio.mimwrite
-
-%\bibitem{}
-%https://github.com/
-
-%\end{thebibliography}
 
 \section{Appendix B: Examples}
 \begin{figure*}[!t]\label{fig:merge}
