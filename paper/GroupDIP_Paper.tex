@@ -514,10 +514,14 @@ Equation \hyperref[eq:1]{(\ref{eq:1})} is then applied to the shifted pixels to 
 
 
 \section{Image Morphing Technique}
-\IEEEPARstart{F}{irst}, to find each corresponding points in images $I$ and $J$, we used dlib to detect facial feature points. We then added points to the corners of the images to increase the number of triangles used for Delaunay Triangulation in the following step.
-Using the corresponding points, we want to perform Delaunay Triangulation on the set of averaged points for the two images. This will give us an indexed list of triangles that we can use to warp the images for morphing. \newline \newline
-To warp or blend the two images we must use equations \hyperref[eq:2]{(\ref{eq:2})} and \hyperref[eq:3]{(\ref{eq:3})} to locate the pixels in image M. Then we calculate the affine transform using OpenCV’s getAffineTransform. This will map the three corners of a triangle in image $I$ or $J$ to a corresponding triangle in $M$. Then we must warp all of the pixels inside each triangle to $M$. This is achieved using the function warpAffine. It must be noted that warpAffine only takes in an image and not a triangle, so we had to create a bounding box for each triangle and then create a triangular mask using fillConvexPoly.
-Finally after some fine-tuning to hide the seams, the images can be blended using varying values of $\alpha$.
+\subsection{Landmark Detection}
+	First, to find each corresponding points in images I and J, we used Dlib, a general-purpose C++-based toolkit, to detect facial landmarks. Dlib creates a bag of features using a Histogram of Ordered Gradients, then classifies using a sliding window detection. Dlib’s model was trained to return 68 distinct points at specific points on a face (such as on the corners of the lips, the edge of the face, and more). In addition to Dlib’s facial landmarks, we added anchor points to the corners of the images because we also want to morph the pieces of the image that fall outside of the main face.
+
+\subsection{Subdivision}
+Using our set of points, we subdivide the image using Delaunay Triangulation. This algorithm aims to create triangle subdivisions between all of the points while maximizing the minimum angle present in any triangle. By doing this maximization, we create the “fattest” triangles possible and minimize “sliver” triangles - ones that are extremely thin. Each of these triangles are represented within the application as sets of 3 point coordinates each. 
+We also create a separate subdivision for each triangle to use within the next step - a rectangular subsection of the original image that is cropped using a bounding box around the triangle. Using this subdivision proves beneficial because many library functions expect a simple two dimensional array to perform operations on (such as cv2.wiarpAffine(), as described below).
+
+\subsection{Warping}
 
 \subsection{Find Corresponding Points}
 \begin{enumerate}[label=\alph*)]
@@ -543,8 +547,16 @@ Finally after some fine-tuning to hide the seams, the images can be blended usin
 \section{Conclusion}
 
 
+\section{Appendix A: Code}
+See \url{https://github.com/conradhappeliv/imagemorpher} for the full code-base and instructions on running.
 
-
+\section{Appendix B: Examples}
+\begin{figure*}[!t]\label{fig:merge}
+	\includegraphics[width = \linewidth]{sample1}
+	\includegraphics[width = \linewidth]{sample2}
+	\includegraphics[width = \linewidth]{sample3}
+	\caption{Sample Merge Sequences}
+\end{figure*}
 
 % conference papers do not normally have an appendix
 
