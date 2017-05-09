@@ -304,6 +304,7 @@
 % http://www.ctan.org/tex-archive/macros/latex/contrib/dblfloatfix/
 
 
+\usepackage{enumitem}
 
 
 % *** PDF, URL AND HYPERLINK PACKAGES ***
@@ -428,16 +429,6 @@ Y_M &= (1-\alpha)Y_I + \alpha*Y_J
 
 Equation \hyperref[eq:1]{(\ref{eq:1})} is then applied to the shifted pixels to obtain our morphed image.
 
-\subsection{Delaunay Triangles}
-Filler text or something that you want
-
-
-\subsection{Affine Transform}
-
-
-
-\subsection{Blending}
-
 % An example of a floating figure using the graphicx package.
 % Note that \label must occur AFTER (or within) \caption.
 % For figures, \caption should occur after the \includegraphics.
@@ -522,33 +513,29 @@ Filler text or something that you want
 % command of the stfloats package.
 
 
-\section{Implementation}
+\section{Image Morphing Technique}
+\IEEEPARstart{F}{irst}, to find each corresponding points in images $I$ and $J$, we used dlib to detect facial feature points. We then added points to the corners of the images to increase the number of triangles used for Delaunay Triangulation in the following step.
+Using the corresponding points, we want to perform Delaunay Triangulation on the set of averaged points for the two images. This will give us an indexed list of triangles that we can use to warp the images for morphing. \newline \newline
+To warp or blend the two images we must use equations \hyperref[eq:2]{(\ref{eq:2})} and \hyperref[eq:3]{(\ref{eq:3})} to locate the pixels in image M. Then we calculate the affine transform using OpenCV’s getAffineTransform. This will map the three corners of a triangle in image $I$ or $J$ to a corresponding triangle in $M$. Then we must warp all of the pixels inside each triangle to $M$. This is achieved using the function warpAffine. It must be noted that warpAffine only takes in an image and not a triangle, so we had to create a bounding box for each triangle and then create a triangular mask using fillConvexPoly.
+Finally after some fine-tuning to hide the seams, the images can be blended using varying values of $\alpha$.
+
+\subsection{Find Corresponding Points}
+\begin{enumerate}[label=\alph*)]
+\item Dlib
+	\begin{enumerate}[label=\roman*)]
+		\item dlib.get$\_$frontal$\_$face$\_$detector() to find a bounding box over a face
+		\begin{enumerate}[label=\arabic*)]
+			\item Uses sliding window classifier over a histogram of gradients pyramid
+		\end{enumerate}
+	\end{enumerate}
+\end{enumerate}
+
+\subsection{Delaunay Triangulation}
 
 
-\begin{table}[H]
-	\centering
-	\begin{tabular}{|c|c|c|c|c|}\hline 
-		\textbf{\#Words} & \textbf{3004} & \textbf{6177} & \textbf{11639} & \textbf{22000}\\ \hline
-		\textbf{hash} &0.2583 & 0.5634 & 0.9473 & 1.7650\\ \hline
-		\textbf{avl} &0.3339 & 0.9468 & 2.5899 & 7.7727\\ \hline
-	\end{tabular}
-	\caption{Loading Times in Seconds}
-\end{table}
-
-\begin{figure}[H]
-	\caption{Mean Loading Times}
-\end{figure}
+\subsection{Warping Images}
 
 
-\begin{table}[H]
-	\centering
-	\begin{tabular}{|c|c|c|c|c|}\hline 
-		\textbf{\#Words} & \textbf{3004} & \textbf{6177} & \textbf{11639} & \textbf{22000}\\ \hline
-		\textbf{hash} &0.0875 & 0.0849 & 0.0799 & 0.0802\\ \hline
-		\textbf{avl} &0.1599 & 0.1688 & 0.1691 & 0.1816\\ \hline
-	\end{tabular}
-	\caption{Mismatch Search Times in MilliSeconds}
-\end{table}
 
 \section{Analysis}
 
