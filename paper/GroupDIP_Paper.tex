@@ -166,7 +166,7 @@
 % You can find documentation about the pdfTeX application at:
 % http://www.tug.org/applications/pdftex
 \usepackage{graphicx}
-
+\usepackage{listings} %for code snippets
 \usepackage[tableposition=top]{caption}
 
 
@@ -570,26 +570,42 @@ Finally after some fine-tuning to hide the seams, the images can be blended usin
 	\end{align}
 \item Use warpAffine to apply the affine transform
 \item Apply triangle mask to only retrieve morphed triangle
+\begin{figure}[H]
+	\includegraphics[width = \linewidth]{triangles}
+	\caption{Masked Triangles}
+\end{figure}
+\end{enumerate}
+
+\subsection{GIF Creation}
+A GIF, at its most basic, is a series of static images joined and played in series.  It’s possible to use imageio Python package’s ability to compile this information and output to a GIF format. After passing in an N-dimensional NumPy array of images, a back-and-forth effect demonstrates the morphing from image I to J as well as from J to I. The reverse playback can be created by appending the reverse of the image array to itself. Because each frame in a GIF can have an independent duration, a longer pause at the start and end frames should be created to emphasize each original image. Also, a compression in the number of available colors using the GIF’s format ability will reduce the image file size.
+
+\subsection{Server}
+	An in-class demonstration is a desirable goal and it is important that the server works as seamlessly as possible which includes a fast result. Generating the independent frames of the GIF is a highly-parallelizable and independent job. Thus, we spawn subprocesses, whose number depends on how many logical cores are available, to which frame-generation is offloaded.
+\begin{enumerate}[label=\alph*)]
+\item Simple REST Server based on CherryPy with two endpoints
+\begin{enumerate}[label=\roman*)]
+	\item /static returns static files (HTML, JS, CSS, etc)
+	\item /upload accepts two images and redirects the user to a static GIF file after calling the image$\_$morpher
+\end{enumerate}
+
+\item Performance:
+\begin{enumerate}[label=\roman*)]
+	\item Since an in-class demo was an end goal, we wanted to make sure it worked as seamlessly as possible - this included getting a fast result.
+	\item Generating the independent frames of the GIF is a highly-parallelizable and independent job. Thus, we spawn subprocesses (number depending on how many logical cores are available) to which frame-generation is offloaded
+\end{enumerate}
 \end{enumerate}
 
 
-
-\section{Analysis}
+\section{Results}
+	The generated GIF results in a seamless transition from image I to J using varying values of alpha to morph the two images. Examples of this transition can be seen in Appendix B. While image morphing and GIF generation seems to perform well on a PC, users may have difficulty with results when accessing the server on a mobile device. If an image depicts a face with glasses, this may also cause problems with the program.  
 
 
 \section{Conclusion}
-
+In this paper, we provide a framework for implementing Facial Image Morphing using Python, Dlib, and OpenCV. By varying the value of alpha we are able to create an array of images that will demonstrate a transition from image I to J and can be viewed as a GIF. This is a proof of concept that if we are able to create one-to-one delaunay triangles in two images, seamless morphing is possible.
 
 \section{Appendix A: Code}
 See \url{https://github.com/conradhappeliv/imagemorpher} for the full code-base and instructions on running.
 
-\section{Appendix B: Examples}
-\begin{figure*}[!t]\label{fig:merge}
-	\includegraphics[width = \linewidth]{sample1}
-	\includegraphics[width = \linewidth]{sample2}
-	\includegraphics[width = \linewidth]{sample3}
-	\caption{Sample Merge Sequences}
-\end{figure*}
 
 % conference papers do not normally have an appendix
 
@@ -628,17 +644,74 @@ See \url{https://github.com/conradhappeliv/imagemorpher} for the full code-base 
 % (used to reserve space for the reference number labels box)
 \begin{thebibliography}{1}
 
-\bibitem{IEEEhowto:kopka}
-H.~Kopka and P.~W. Daly, \emph{A Guide to \LaTeX}, 3rd~ed.\hskip 1em plus
-  0.5em minus 0.4em\relax Harlow, England: Addison-Wesley, 1999.
+\bibitem{}
+http://docs.opencv.org/2.4/modules/imgproc/doc/geometric$\_$transformations.html
+?highlight=getaffinetransform$\#$warpaffine
+
+\bibitem{}
+http://docs.opencv.org/2.4/modules/imgproc/doc/geometric$\_$transformations.html
+$\#$getaffinetransform
+
+\bibitem{}
+http://dlib.net/imaging.html$\#$get$\_$frontal$\_$face$\_$detector
+
+\bibitem{}
+http://dlib.net/imaging.html$\#$shape$\_$predictor
+
+\bibitem{}
+http://imageio.readthedocs.io/en/latest/userapi.html$\#$imageio.mimwrite
 
 \bibitem{}
 https://github.com/
 
 \end{thebibliography}
 
+\section{Appendix C: Examples}
+\begin{figure*}[!t]\label{fig:merge}
+	\includegraphics[width = \linewidth]{sample1}
+	\includegraphics[width = \linewidth]{sample2}
+	\includegraphics[width = \linewidth]{sample3}
+	\caption{Sample Merge Sequences}
+The following code was used to generate these images
+\end{figure*}
 
+\begin{figure*}[!t]\label{fig:code}
+\begin{lstlisting}[language=Python]
+face1 = io.imread('data/face5.jpg')
+face2 = io.imread('data/face6.jpg')
+face1gray = cv2.cvtColor(face1, cv2.COLOR_RGB2GRAY)
+face2gray = cv2.cvtColor(face2, cv2.COLOR_RGB2GRAY)
+res = None
+for key, amt in enumerate([0, .25, .5, .75, 1]):
+   r = morph(face1, face2, amt, False)
+   if res is None:
+       res = np.zeros((r.shape[0], r.shape[1]*5), np.float32)
+   res[:, key*r.shape[1]:(key+1)*r.shape[1]] = r
+from PIL import Image
+img = Image.fromarray(res, 'F')
+img = img.convert('RGB')
+img.save('out.png')
 
+	To generate the 6-tiled pic up above:
+	plt.subplot(3, 2, 1)
+plt.imshow(subimg1, cmap=plt.cm.gray)
+plt.subplot(3, 2, 2)
+plt.imshow(subimg2, cmap=plt.cm.gray)
+plt.subplot(3, 2, 3)
+plt.imshow(warped1*mask, cmap=plt.cm.gray)
+plt.subplot(3, 2, 4)
+plt.imshow(warped2*mask, cmap=plt.cm.gray)
+combined = newimg_sq + (alpha_blend * mask)[:newimg_sq.shape[0], :newimg_sq.shape[1]]
+plt.subplot(3, 2, 5)
+plt.imshow(combined, cmap=plt.cm.gray)
+newimg[bb_morph[1]:bb_morph[1] + bb_morph[3], bb_morph[0]:bb_morph[0] + bb_morph[2]] 
+	= newimg_sq + (alpha_blend * mask)[:newimg_sq.shape[0], :newimg_sq.shape[1]]
+plt.subplot(3, 2, 6)
+plt.imshow(newimg, cmap=plt.cm.gray)
+plt.show()
+
+\end{lstlisting}
+\end{figure*}
 
 % that's all folks
 \end{document}
