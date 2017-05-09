@@ -121,7 +121,7 @@
 % http://www.ctan.org/tex-archive/macros/latex/contrib/cite/
 % The documentation is contained in the cite.sty file itself.
 
-
+\usepackage{hyperref}
 
 
 
@@ -410,7 +410,7 @@ In this paper, we propose an implementation of Facial Image Morphing using openC
 
 \section{Introduction}
 \IEEEPARstart{A}{t the} simplest level, Image morphing is simply the blending of pixels of image $I$ and $J$ to create $M$ using: 
-\begin{align}
+\begin{align} \label{eq:1}
 M(x,y) &= (1-\alpha)I(x,y) + \alpha*J(x,y) 
 \end{align}
 \begin{align*}
@@ -421,12 +421,12 @@ When $\alpha = 0$ , $M$ will be identical to $I$, and when $\alpha =1$, it will 
 % (should never be an issue)
 
 Thus, we must establish pixel correspondence between images $I$ and $J$. Only then can we calculate the pixel locations in $M$. The $x$ and $y$ locations in $M$ can be represented with:
-\begin{align}
-X_M &= (1-\alpha)X_I + \alpha*X_J\\  
+\begin{align}\label{eq:2}
+X_M &= (1-\alpha)X_I + \alpha*X_J\\ \label{eq:3} 
 Y_M &= (1-\alpha)Y_I + \alpha*Y_J   
 \end{align}
 
-Equation is then applied to the shifted pixels to obtain our morphed image.
+Equation \hyperref[eq:1]{(\ref{eq:1})} is then applied to the shifted pixels to obtain our morphed image.
 
 \subsection{Delaunay Triangles}
 Filler text or something that you want
