@@ -524,7 +524,7 @@ See \url{https://github.com/conradhappeliv/imagemorpher} for the full code-base 
 
 %\end{thebibliography}
 
-\section{Appendix C: Examples}
+\section{Appendix B: Examples}
 \begin{figure*}[!t]\label{fig:merge}
 	\includegraphics[width = \linewidth]{sample1}
 	\includegraphics[width = \linewidth]{sample2}
