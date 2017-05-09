@@ -346,37 +346,7 @@
 		Southern Methodist University
         }
         
-%\author{\IEEEauthorblockN{\textbf{Danton Zhao}}
-%\IEEEauthorblockA{Lyle School of Engineering\\Electrical Engineering\\
-%Southern Methodist University\\
-%Dallas, Texas 75275-0100\\
-%Email: dantonz@smu.edu}}
 
-%~\IEEEmembership{Member,~IEEE,}
-%        John~Doe,~\IEEEmembership{Fellow,~OSA,}
-%        and~Jane~Doe,~\IEEEmembership{Life~Fellow,~IEEE}%
-
-% conference papers do not typically use \thanks and this command
-% is locked out in conference mode. If really needed, such as for
-% the acknowledgment of grants, issue a \IEEEoverridecommandlockouts
-% after \documentclass
-
-% for over three affiliations, or if they all won't fit within the width
-% of the page, use this alternative format:
-% 
-%\author{\IEEEauthorblockN{Michael Shell\IEEEauthorrefmark{1},
-%Homer Simpson\IEEEauthorrefmark{2},
-%James Kirk\IEEEauthorrefmark{3}, 
-%Montgomery Scott\IEEEauthorrefmark{3} and
-%Eldon Tyrell\IEEEauthorrefmark{4}}
-%\IEEEauthorblockA{\IEEEauthorrefmark{1}School of Electrical and Computer Engineering\\
-%Georgia Institute of Technology,
-%Atlanta, Georgia 30332--0250\\ Email: see http://www.michaelshell.org/contact.html}
-%\IEEEauthorblockA{\IEEEauthorrefmark{2}Twentieth Century Fox, Springfield, USA\\
-%Email: homer@thesimpsons.com}
-%\IEEEauthorblockA{\IEEEauthorrefmark{3}Starfleet Academy, San Francisco, California 96678-2391\\
-%Telephone: (800) 555--1212, Fax: (888) 555--1212}
-%\IEEEauthorblockA{\IEEEauthorrefmark{4}Tyrell Inc., 123 Replicant Street, Los Angeles, California 90210--4321}}
 
 
 
@@ -392,7 +362,7 @@
 
 % no keywords
 \begin{abstract}
-In this paper, we propose an implementation of Facial Image Morphing using openCV. Our framework uses the detection of facial features in an image and then warps and adjusts the pixel intensity values determined by a predefined alpha value. Alpha is a value between 0 and 1 that determines the presence of each original image in the morphed image.
+Abstract: In this paper, we propose an implementation of Facial Image Morphing using Python, Dlib, and OpenCV. Our application detects facial landmarks in an image and then warps and blends the pixels between the landmarks to create a smooth transition between two faces.
 \end{abstract}
 
 
@@ -421,144 +391,23 @@ When $\alpha = 0$ , $M$ will be identical to $I$, and when $\alpha =1$, it will 
 % You must have at least 2 lines in the paragraph with the drop letter
 % (should never be an issue)
 
-Thus, we must establish pixel correspondence between images $I$ and $J$. Only then can we calculate the pixel locations in $M$. The $x$ and $y$ locations in $M$ can be represented with:
-\begin{align}\label{eq:2}
-X_M &= (1-\alpha)X_I + \alpha*X_J\\ \label{eq:3} 
-Y_M &= (1-\alpha)Y_I + \alpha*Y_J   
-\end{align}
-
-Equation \hyperref[eq:1]{(\ref{eq:1})} is then applied to the shifted pixels to obtain our morphed image.
-
-% An example of a floating figure using the graphicx package.
-% Note that \label must occur AFTER (or within) \caption.
-% For figures, \caption should occur after the \includegraphics.
-% Note that IEEEtran v1.7 and later has special internal code that
-% is designed to preserve the operation of \label within \caption
-% even when the captionsoff option is in effect. However, because
-% of issues like this, it may be the safest practice to put all your
-% \label just after \caption rather than within \caption{}.
-%
-% Reminder: the "draftcls" or "draftclsnofoot", not "draft", class
-% option should be used if it is desired that the figures are to be
-% displayed while in draft mode.
-%
-%\begin{figure}[!t]
-%\centering
-%\includegraphics[width=2.5in]{myfigure}
-% where an .eps filename suffix will be assumed under latex, 
-% and a .pdf suffix will be assumed for pdflatex; or what has been declared
-% via \DeclareGraphicsExtensions.
-%\caption{Simulation Results.}
-%\label{fig_sim}
-%\end{figure}
-
-% Note that IEEE typically puts floats only at the top, even when this
-% results in a large percentage of a column being occupied by floats.
+Thus, we need to establish pixel correspondence between images $I$ and $J$. Only then can we calculate the pixel intensity values in $M$. 
 
 
-% An example of a double column floating figure using two subfigures.
-% (The subfig.sty package must be loaded for this to work.)
-% The subfigure \label commands are set within each subfloat command,
-% and the \label for the overall figure must come after \caption.
-% \hfil is used as a separator to get equal spacing.
-% Watch out that the combined width of all the subfigures on a 
-% line do not exceed the text width or a line break will occur.
-%
-%\begin{figure*}[!t]
-%\centering
-%\subfloat[Case I]{\includegraphics[width=2.5in]{box}%
-%\label{fig_first_case}}
-%\hfil
-%\subfloat[Case II]{\includegraphics[width=2.5in]{box}%
-%\label{fig_second_case}}
-%\caption{Simulation results.}
-%\label{fig_sim}
-%\end{figure*}
-%
-% Note that often IEEE papers with subfigures do not employ subfigure
-% captions (using the optional argument to \subfloat[]), but instead will
-% reference/describe all of them (a), (b), etc., within the main caption.
-
-
-% An example of a floating table. Note that, for IEEE style tables, the 
-% \caption command should come BEFORE the table. Table text will default to
-% \footnotesize as IEEE normally uses this smaller font for tables.
-% The \label must come after \caption as always.
-%
-%\begin{table}[!t]
-%% increase table row spacing, adjust to taste
-%\renewcommand{\arraystretch}{1.3}
-% if using array.sty, it might be a good idea to tweak the value of
-% \extrarowheight as needed to properly center the text within the cells
-%\caption{An Example of a Table}
-%\label{table_example}
-%\centering
-%% Some packages, such as MDW tools, offer better commands for making tables
-%% than the plain LaTeX2e tabular which is used here.
-%\begin{tabular}{|c||c|}
-%\hline
-%One & Two\\
-%\hline
-%Three & Four\\
-%\hline
-%\end{tabular}
-%\end{table}
-
-
-% Note that IEEE does not put floats in the very first column - or typically
-% anywhere on the first page for that matter. Also, in-text middle ("here")
-% positioning is not used. Most IEEE journals/conferences use top floats
-% exclusively. Note that, LaTeX2e, unlike IEEE journals/conferences, places
-% footnotes above bottom floats. This can be corrected via the \fnbelowfloat
 % command of the stfloats package.
 
 
 \section{Image Morphing Technique}
 \subsection{Landmark Detection}
-	First, to find each corresponding points in images I and J, we used Dlib, a general-purpose C++-based toolkit, to detect facial landmarks. Dlib creates a bag of features using a Histogram of Ordered Gradients, then classifies using a sliding window detection. Dlib’s model was trained to return 68 distinct points at specific points on a face (such as on the corners of the lips, the edge of the face, and more). In addition to Dlib’s facial landmarks, we added anchor points to the corners of the images because we also want to morph the pieces of the image that fall outside of the main face.
+	First, to find each corresponding points in images I and J, we used Dlib, a general-purpose C++-based toolkit, to detect facial landmarks. Dlib creates a bag of features using a Histogram of Ordered Gradients, then classifies using a sliding window detection. Dlib’s model was trained, using the HELEN dataset, to return 68 distinct points at specific points on a face (such as on the corners of the lips, the edge of the face, and more). In addition to Dlib's facial landmarks, we added anchor points to the corners of the images because we also want to morph the pieces of the image that fall outside of the main face.
 
 \subsection{Subdivision}
-Using our set of points, we subdivide the image using Delaunay Triangulation. This algorithm aims to create triangle subdivisions between all of the points while maximizing the minimum angle present in any triangle. By doing this maximization, we create the “fattest” triangles possible and minimize “sliver” triangles - ones that are extremely thin. Each of these triangles are represented within the application as sets of 3 point coordinates each. 
-We also create a separate subdivision for each triangle to use within the next step - a rectangular subsection of the original image that is cropped using a bounding box around the triangle. Using this subdivision proves beneficial because many library functions expect a simple two dimensional array to perform operations on (such as cv2.wiarpAffine(), as described below).
+Using our set of points, we subdivide the image using Delaunay Triangulation. This algorithm aims to create triangle subdivisions between all of the points while maximizing the minimum angle present in any triangle. By doing this maximization, we create the “fattest” triangles possible and minimize “sliver” triangles - ones that are extremely thin. Each of these triangles are represented within the application as sets of 3 point coordinates each. Some of these triangles extend beyond the bounds of the image, resulting in invalid triangles. We remove these invalid triangles so that one-to-one relationships between triangles in image I,J, and M are preserved.
+We also create a separate subdivision for each triangle to use within the next step - a rectangular subsection of the original image that is cropped using a bounding box around the triangle. Using this subdivision proves beneficial because many library functions expect a simple two dimensional array to perform operations on (such as cv2.warpAffine(), as described below).
 
 \subsection{Warping}
-To warp or blend the two images we must use equations \hyperref[eq:2]{(\ref{eq:2})} and \hyperref[eq:3]{(\ref{eq:3})} to locate the pixels in image M. Then we calculate the affine transform using OpenCV’s getAffineTransform. This will map the three corners of a triangle in image I or J to a corresponding triangle in M. Then we must warp all of the pixels inside each triangle to M. This is achieved using the function warpAffine. It must be noted that warpAffine only takes in an image and not a triangle, so we had to create a bounding box for each triangle and then create a triangular mask using fillConvexPoly.
+To warp or blend the two images we must use equations \hyperref[eq:2]{(\ref{eq:2})} and \hyperref[eq:3]{(\ref{eq:3})} to locate the pixels in image M. Then we calculate the affine transform using OpenCV’s getAffineTransform. This will map the three corners of a triangle in image I or J to a corresponding triangle in M. Following that, we must warp all of the pixels inside each triangle to their corresponding triangle in M.This is achieved using the function warpAffine. It must be noted that warpAffine only takes in an image and not a triangle, so we had to create a bounding box for each triangle and then create a triangular mask using fillConvexPoly.
 Finally after some fine-tuning to hide the seams, the images can be blended using varying values of $\alpha$.
-
-\subsection{Find Corresponding Points}
-\begin{enumerate}[label=\alph*)]
-\item Dlib
-\begin{enumerate}[label=\roman*)]
-	\item dlib.get$\_$frontal$\_$face$\_$detector() to find a bounding box over a face
-	\begin{enumerate}[label=\arabic*)]
-		\item Uses sliding window classifier over a histogram of gradients pyramid
-	\end{enumerate}
-	\item dlib.shape$\_$predictor() to find “key-points” within the bounding box
-	\begin{enumerate}[label=\arabic*)]
-		\item Model trained over the HELEN dataset for facial feature detection
-	\end{enumerate}
-\end{enumerate}
-\end{enumerate}
-
-\subsection{Delaunay Triangulation}
-\begin{enumerate}[label=\alph*)]
-\item Algorithm used to maximize the minimum necessary angle within triangles within points (no “slivers”)
-\item Used cv2.Subdiv2D class and .getTriangleList()
-\begin{enumerate}[label=\roman*)]
-	\item This handled the triangulation algorithm for us
-	\item Returns a list of sets of 3 points (x $\&$ y coordinates)
-	\item We only had to clean up the results a little bit
-	\begin{enumerate}[label=\arabic*)]
-		\item Discard triangles that extended beyond the image
-		\item Establish the one-to-one correspondence between each image's triangles
-	\end{enumerate}
-\end{enumerate}
-\end{enumerate}
-\subsection{Warping Images}
-\begin{enumerate}[label=\alph*)]
-\item Iterate through all available triangles
-\item Calculate the affine transformations from I$\rightarrow$M and J$\rightarrow$M
-\item
 	\begin{align}
 		\begin{bmatrix}
 			x_i' \\ y_i'
@@ -568,32 +417,65 @@ Finally after some fine-tuning to hide the seams, the images can be blended usin
 			x_i \\ y_i \\ 1
 		\end{bmatrix}
 	\end{align}
-\item Use warpAffine to apply the affine transform
-\item Apply triangle mask to only retrieve morphed triangle
+	
+\begin{align}\label{eq:2}
+X_M &= (1-\alpha)X_I + \alpha*X_J\\ \label{eq:3} 
+Y_M &= (1-\alpha)Y_I + \alpha*Y_J   
+\end{align}
+
 \begin{figure}[H]
 	\includegraphics[width = \linewidth]{triangles}
 	\caption{Masked Triangles}
 \end{figure}
-\end{enumerate}
+%\subsection{Find Corresponding Points}
+%\begin{enumerate}[label=\alph*)]
+%\item Dlib
+%\begin{enumerate}[label=\roman*)]
+%	\item dlib.get$\_$frontal$\_$face$\_$detector() to find a bounding box over a face
+%	\begin{enumerate}[label=\arabic*)]
+%		\item Uses sliding window classifier over a histogram of gradients pyramid
+%	\end{enumerate}
+%	\item dlib.shape$\_$predictor() to find “key-points” within the bounding box
+%	\begin{enumerate}[label=\arabic*)]
+%		\item Model trained over the HELEN dataset for facial feature detection
+%	\end{enumerate}
+%\end{enumerate}
+%\end{enumerate}
+
+%\subsection{Delaunay Triangulation}
+%\begin{enumerate}[label=\alph*)]
+%\item Algorithm used to maximize the minimum necessary angle within triangles within points (no “slivers”)
+%\item Used cv2.Subdiv2D class and .getTriangleList()
+%\begin{enumerate}[label=\roman*)]
+%	\item This handled the triangulation algorithm for us
+%	\item Returns a list of sets of 3 points (x $\&$ y coordinates)
+%	\item We only had to clean up the results a little bit
+%	\begin{enumerate}[label=\arabic*)]
+%		\item Discard triangles that extended beyond the image
+%		\item Establish the one-to-one correspondence between each image's triangles
+%	\end{enumerate}
+%\end{enumerate}
+%\end{enumerate}
+%\subsection{Warping Images}
+%\begin{enumerate}[label=\alph*)]
+%\item Iterate through all available triangles
+%\item Calculate the affine transformations from I$\rightarrow$M and J$\rightarrow$M
+%\item
+
+%\item Use warpAffine to apply the affine transform
+%\item Apply triangle mask to only retrieve morphed triangle
+%\begin{figure}[H]
+%	\includegraphics[width = \linewidth]{triangles}
+%	\caption{Masked Triangles}
+%\end{figure}
+%\end{enumerate}
 
 \subsection{GIF Creation}
-A GIF, at its most basic, is a series of static images joined and played in series.  It’s possible to use imageio Python package’s ability to compile this information and output to a GIF format. After passing in an N-dimensional NumPy array of images, a back-and-forth effect demonstrates the morphing from image I to J as well as from J to I. The reverse playback can be created by appending the reverse of the image array to itself. Because each frame in a GIF can have an independent duration, a longer pause at the start and end frames should be created to emphasize each original image. Also, a compression in the number of available colors using the GIF’s format ability will reduce the image file size.
+A GIF, at its most basic, is a series of static images joined and played in series. By pushing each still into a NumPy array, the GIF generated from the array appears to be a seamless morph. The reverse playback can be created by appending the reverse of the image array to itself. Because each frame in a GIF can have an independent duration, a longer pause at the start and end frames should be created to emphasize each original image. Similar to video, creation of a GIF has an inherent tradeoff of filesize and fluidity/frame rate. For our design, we opted for fewer frames (8 frames) because we wanted to service as many server requests as possible. Using Python's imageio, we further quantized the color spectrum to only 32 shades of grey for each frame and create a compressed GIF from that array of frames.
 
 \subsection{Server}
-	An in-class demonstration is a desirable goal and it is important that the server works as seamlessly as possible which includes a fast result. Generating the independent frames of the GIF is a highly-parallelizable and independent job. Thus, we spawn subprocesses, whose number depends on how many logical cores are available, to which frame-generation is offloaded.
-\begin{enumerate}[label=\alph*)]
-\item Simple REST Server based on CherryPy with two endpoints
-\begin{enumerate}[label=\roman*)]
-	\item /static returns static files (HTML, JS, CSS, etc)
-	\item /upload accepts two images and redirects the user to a static GIF file after calling the image$\_$morpher
-\end{enumerate}
+	An in-class demonstration is a desirable goal and it is important that the server works as smooth and efficient as possible. This implies that fast results are desired so that a user does not have to wait for a GIF to be created.We use a simple REST server based on CherryPy with two endpoints. On one, we return static files such as the HTML and CSS of a page. On the other, we accept two images from the user and redirect the user to the static GIF generated from those two images. Each frame of the GIF can be generated independent of other frames, so we decided to parallelize the process. Thus we create a Python pool object to handle the parallelization of frame generation. 
 
-\item Performance:
-\begin{enumerate}[label=\roman*)]
-	\item Since an in-class demo was an end goal, we wanted to make sure it worked as seamlessly as possible - this included getting a fast result.
-	\item Generating the independent frames of the GIF is a highly-parallelizable and independent job. Thus, we spawn subprocesses (number depending on how many logical cores are available) to which frame-generation is offloaded
-\end{enumerate}
-\end{enumerate}
 
 
 \section{Results}
@@ -601,7 +483,7 @@ A GIF, at its most basic, is a series of static images joined and played in seri
 
 
 \section{Conclusion}
-In this paper, we provide a framework for implementing Facial Image Morphing using Python, Dlib, and OpenCV. By varying the value of alpha we are able to create an array of images that will demonstrate a transition from image I to J and can be viewed as a GIF. This is a proof of concept that if we are able to create one-to-one delaunay triangles in two images, seamless morphing is possible.
+In this paper, we provide a framework for implementing Facial Image Morphing using Python, Dlib, and OpenCV. After landmark detection and subdivision, we are able to warp the images to produce a morphed image M. The morphed image can then be manipulated by alpha to show varying degrees of each original image.  By varying the value of alpha we are able to create an array of images that will demonstrate a transition from image I to J and can be viewed as a GIF.
 
 \section{Appendix A: Code}
 See \url{https://github.com/conradhappeliv/imagemorpher} for the full code-base and instructions on running.
@@ -618,53 +500,29 @@ See \url{https://github.com/conradhappeliv/imagemorpher} for the full code-base 
 
 
 
+%\begin{thebibliography}{1}
 
+%\bibitem{}
+%http://docs.opencv.org/2.4/modules/imgproc/doc/geometric$\_$transformations.html
+%?highlight=getaffinetransform$\#$warpaffine
 
-% trigger a \newpage just before the given reference
-% number - used to balance the columns on the last page
-% adjust value as needed - may need to be readjusted if
-% the document is modified later
-%\IEEEtriggeratref{8}
-% The "triggered" command can be changed if desired:
-%\IEEEtriggercmd{\enlargethispage{-5in}}
+%\bibitem{}
+%http://docs.opencv.org/2.4/modules/imgproc/doc/geometric$\_$transformations.html
+%$\#$getaffinetransform
 
-% references section
+%\bibitem{}
+%http://dlib.net/imaging.html$\#$get$\_$frontal$\_$face$\_$detector
 
-% can use a bibliography generated by BibTeX as a .bbl file
-% BibTeX documentation can be easily obtained at:
-% http://www.ctan.org/tex-archive/biblio/bibtex/contrib/doc/
-% The IEEEtran BibTeX style support page is at:
-% http://www.michaelshell.org/tex/ieeetran/bibtex/
-%\bibliographystyle{IEEEtran}
-% argument is your BibTeX string definitions and bibliography database(s)
-%\bibliography{IEEEabrv,../bib/paper}
-%
-% <OR> manually copy in the resultant .bbl file
-% set second argument of \begin to the number of references
-% (used to reserve space for the reference number labels box)
-\begin{thebibliography}{1}
+%\bibitem{}
+%http://dlib.net/imaging.html$\#$shape$\_$predictor
 
-\bibitem{}
-http://docs.opencv.org/2.4/modules/imgproc/doc/geometric$\_$transformations.html
-?highlight=getaffinetransform$\#$warpaffine
+%\bibitem{}
+%http://imageio.readthedocs.io/en/latest/userapi.html$\#$imageio.mimwrite
 
-\bibitem{}
-http://docs.opencv.org/2.4/modules/imgproc/doc/geometric$\_$transformations.html
-$\#$getaffinetransform
+%\bibitem{}
+%https://github.com/
 
-\bibitem{}
-http://dlib.net/imaging.html$\#$get$\_$frontal$\_$face$\_$detector
-
-\bibitem{}
-http://dlib.net/imaging.html$\#$shape$\_$predictor
-
-\bibitem{}
-http://imageio.readthedocs.io/en/latest/userapi.html$\#$imageio.mimwrite
-
-\bibitem{}
-https://github.com/
-
-\end{thebibliography}
+%\end{thebibliography}
 
 \section{Appendix C: Examples}
 \begin{figure*}[!t]\label{fig:merge}
@@ -672,45 +530,6 @@ https://github.com/
 	\includegraphics[width = \linewidth]{sample2}
 	\includegraphics[width = \linewidth]{sample3}
 	\caption{Sample Merge Sequences}
-The following code was used to generate these images
-\end{figure*}
-
-\begin{figure*}[!t]\label{fig:code}
-\begin{lstlisting}[language=Python]
-face1 = io.imread('data/face5.jpg')
-face2 = io.imread('data/face6.jpg')
-face1gray = cv2.cvtColor(face1, cv2.COLOR_RGB2GRAY)
-face2gray = cv2.cvtColor(face2, cv2.COLOR_RGB2GRAY)
-res = None
-for key, amt in enumerate([0, .25, .5, .75, 1]):
-   r = morph(face1, face2, amt, False)
-   if res is None:
-       res = np.zeros((r.shape[0], r.shape[1]*5), np.float32)
-   res[:, key*r.shape[1]:(key+1)*r.shape[1]] = r
-from PIL import Image
-img = Image.fromarray(res, 'F')
-img = img.convert('RGB')
-img.save('out.png')
-
-#To generate the 6-tiled pic up above:
-plt.subplot(3, 2, 1)
-plt.imshow(subimg1, cmap=plt.cm.gray)
-plt.subplot(3, 2, 2)
-plt.imshow(subimg2, cmap=plt.cm.gray)
-plt.subplot(3, 2, 3)
-plt.imshow(warped1*mask, cmap=plt.cm.gray)
-plt.subplot(3, 2, 4)
-plt.imshow(warped2*mask, cmap=plt.cm.gray)
-combined = newimg_sq + (alpha_blend * mask)[:newimg_sq.shape[0], :newimg_sq.shape[1]]
-plt.subplot(3, 2, 5)
-plt.imshow(combined, cmap=plt.cm.gray)
-newimg[bb_morph[1]:bb_morph[1] + bb_morph[3], bb_morph[0]:bb_morph[0] + bb_morph[2]] 
-	= newimg_sq + (alpha_blend * mask)[:newimg_sq.shape[0], :newimg_sq.shape[1]]
-plt.subplot(3, 2, 6)
-plt.imshow(newimg, cmap=plt.cm.gray)
-plt.show()
-
-\end{lstlisting}
 \end{figure*}
 
 % that's all folks
