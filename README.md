@@ -8,6 +8,7 @@ Upload two images of two faces to the web application and a GIF is generated of 
 
     conda env create -f dipenv.yml
     source activate dipy35
+    python server.py 
 
 ## Examples
 
