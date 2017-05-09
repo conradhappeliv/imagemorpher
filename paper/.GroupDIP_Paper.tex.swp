@@ -522,22 +522,55 @@ Using our set of points, we subdivide the image using Delaunay Triangulation. Th
 We also create a separate subdivision for each triangle to use within the next step - a rectangular subsection of the original image that is cropped using a bounding box around the triangle. Using this subdivision proves beneficial because many library functions expect a simple two dimensional array to perform operations on (such as cv2.wiarpAffine(), as described below).
 
 \subsection{Warping}
+To warp or blend the two images we must use equations \hyperref[eq:2]{(\ref{eq:2})} and \hyperref[eq:3]{(\ref{eq:3})} to locate the pixels in image M. Then we calculate the affine transform using OpenCV’s getAffineTransform. This will map the three corners of a triangle in image I or J to a corresponding triangle in M. Then we must warp all of the pixels inside each triangle to M. This is achieved using the function warpAffine. It must be noted that warpAffine only takes in an image and not a triangle, so we had to create a bounding box for each triangle and then create a triangular mask using fillConvexPoly.
+Finally after some fine-tuning to hide the seams, the images can be blended using varying values of $\alpha$.
 
 \subsection{Find Corresponding Points}
 \begin{enumerate}[label=\alph*)]
 \item Dlib
-	\begin{enumerate}[label=\roman*)]
-		\item dlib.get$\_$frontal$\_$face$\_$detector() to find a bounding box over a face
-		\begin{enumerate}[label=\arabic*)]
-			\item Uses sliding window classifier over a histogram of gradients pyramid
-		\end{enumerate}
+\begin{enumerate}[label=\roman*)]
+	\item dlib.get$\_$frontal$\_$face$\_$detector() to find a bounding box over a face
+	\begin{enumerate}[label=\arabic*)]
+		\item Uses sliding window classifier over a histogram of gradients pyramid
 	\end{enumerate}
+	\item dlib.shape$\_$predictor() to find “key-points” within the bounding box
+	\begin{enumerate}[label=\arabic*)]
+		\item Model trained over the HELEN dataset for facial feature detection
+	\end{enumerate}
+\end{enumerate}
 \end{enumerate}
 
 \subsection{Delaunay Triangulation}
-
-
+\begin{enumerate}[label=\alph*)]
+\item Algorithm used to maximize the minimum necessary angle within triangles within points (no “slivers”)
+\item Used cv2.Subdiv2D class and .getTriangleList()
+\begin{enumerate}[label=\roman*)]
+	\item This handled the triangulation algorithm for us
+	\item Returns a list of sets of 3 points (x $\&$ y coordinates)
+	\item We only had to clean up the results a little bit
+	\begin{enumerate}[label=\arabic*)]
+		\item Discard triangles that extended beyond the image
+		\item Establish the one-to-one correspondence between each image's triangles
+	\end{enumerate}
+\end{enumerate}
+\end{enumerate}
 \subsection{Warping Images}
+\begin{enumerate}[label=\alph*)]
+\item Iterate through all available triangles
+\item Calculate the affine transformations from I$\rightarrow$M and J$\rightarrow$M
+\item
+	\begin{align}
+		\begin{bmatrix}
+			x_i' \\ y_i'
+		\end{bmatrix}
+		&= Affine\_transform \cdot
+		\begin{bmatrix}
+			x_i \\ y_i \\ 1
+		\end{bmatrix}
+	\end{align}
+\item Use warpAffine to apply the affine transform
+\item Apply triangle mask to only retrieve morphed triangle
+\end{enumerate}
 
 
 
